@@ -1,0 +1,109 @@
+<div class="player-wrapper">
+    <div class="player" id="player">
+        
+        <div id="introOverlay">
+            <video id="introVideo" playsinline>
+                <source src="https://rr1---sn-oxunxg8pjvn-bg0rr.googlevideo.com/videoplayback?expire=1776378404&ei=ZLngadisJZ7p-LYPz43GaA&ip=2804:14c:96:abe8:760a:3751:d9:40e5&id=eb82f3caa71eb13e&itag=22&source=blogger&requiressl=yes&xpc=Egho7Zf3LnoBAQ==&cps=0&met=1776335204,&mh=jh&mm=31&mn=sn-oxunxg8pjvn-bg0rr&ms=au&mv=m&mvi=1&pl=45&rms=au,au&susc=bl&mime=video/mp4&vprv=1&rqh=1&ratebypass=yes&dur=5.526&lmt=1776272400053565&title=eb82f3caa71eb13e&ext=mp4&mt=1776334659&txp=1311224&sparams=expire,ei,ip,id,itag,source,requiressl,xpc,susc,mime,vprv,rqh,ratebypass,dur,lmt,title,ext&sig=AHEqNM4wRQIgBAE4MeKjLojg47662RYFC2xIXiCk6svcl9KPxjTQqRYCIQCQt4ZhPoCt_kqDi0LRJVhnCQgNfv8_eHMf84iPK2xveQ==&lsparams=cps,met,mh,mm,mn,ms,mv,mvi,pl,rms&lsig=APaTxxMwRQIhAM5Dqtq4yFXRZE1xsJqm9uKQuMOYbfFz2v2VNwilywoGAiBZ8Q5He4N1zxF8iNrOhASMhw8Z7lRLuzbJxrrr4GirRw==" type="video/mp4">
+            </video>
+            <button class="start-intro-btn" id="startIntro">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+                Iniciar
+            </button>
+        </div>
+
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhCCHHM5BafhyphenhyphenlmOEgk1APf6ok86Z3xsBIVUE7ypBInK9ErEbX_c0Cr6kGKWIpsdve0VOmXzwzihLtyEiNa8ibdbYcOzoQGWI5gpahM1tLxI72hAE79cOLVzPwjd8bKMWboQq4YiRGFgZ5UdypT3bZIVOVrrua1NfnPlY3KUTnLeGykwOQ/s1600/1001084322.png" alt="Logo" class="player-logo">
+
+        <div class="download-modal" id="dlModal">
+            <div class="modal-content">
+                <p>Deseja baixar o vídeo?</p>
+                <div class="modal-btns">
+                    <button class="modal-btn btn-cancel" id="dlCancel">Cancelar</button>
+                    <button class="modal-btn btn-confirm" id="dlConfirm">Baixar Agora</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="resume-modal" id="resumeModal">
+            <div class="modal-content">
+                <p>Continuar de onde parou?</p>
+                <div class="modal-btns">
+                    <button class="modal-btn btn-cancel" id="resumeCancel">Do início</button>
+                    <button class="modal-btn btn-confirm" id="resumeConfirm">Sim, retomar</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="flashEffect" class="flash-overlay"></div>
+
+        <video id="video" playsinline preload="metadata" crossorigin="anonymous">
+            <source id="videoSource" src="https://1a-1791.com/video/fwe2/5b/s8/2/4/D/n/e/4DneA.caa.mp4?u=0&b=0" type="video/mp4">
+        </video>
+
+        <div class="thumbnail-preview" id="thumbPreview">
+            <video id="videoPreview" muted playsinline></video>
+            <div class="thumbnail-time" id="thumbTime">0:00</div>
+        </div>
+
+        <div class="interaction-layer">
+            <div class="side-zone" id="zoneLeft"><div class="seek-ripple"><svg width="30" height="30" viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z" fill="white"/></svg></div></div>
+            <div class="center-zone" id="zoneCenter"></div>
+            <div class="side-zone" id="zoneRight"><div class="seek-ripple"><svg width="30" height="30" viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z" fill="white"/></svg></div></div>
+        </div>
+
+        <div class="center-play" id="centerPlay">
+            <svg width="24" height="24" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+        </div>
+
+        <div class="controls-bg"></div>
+
+        <div class="top-actions">
+            <button class="icon-btn" id="screenshotBtn" title="Capturar frame">
+                <svg viewBox="0 0 24 24"><path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg>
+            </button>
+            <button class="icon-btn" id="downBtn" title="Download">
+                <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+            </button>
+        </div>
+
+        <div class="bottom-controls">
+            <div class="progress-container" id="progressContainer">
+                <div class="progress-bar"><div class="progress-current" id="progressCurrent"></div></div>
+            </div>
+            <div class="buttons-row">
+                <div class="left-side">
+                    <button class="icon-btn" id="playBtn">
+                        <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        <svg id="pauseIcon" viewBox="0 0 24 24" style="display:none"><path d="M6 19h4V5H6zm8-14h4v14h-4z"/></svg>
+                    </button>
+                    <span class="time-display" id="timeDisplay">0:00 / 0:00</span>
+                </div>
+                <div class="right-side">
+                    <button class="icon-btn" id="settingsBtn"><svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg></button>
+                    <button class="icon-btn" id="fsBtn"><svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7zm7 3h3v-3h2v5h-5zM7 7h3V5H5v5h2zm12-2v5h-2V7h-3V5z"/></svg></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="settings-menu" id="settingsMenu">
+            <div class="volume-container">
+                <div class="menu-item-icon" id="muteBtn">
+                    <svg id="volIcon" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" fill="white"/></svg>
+                </div>
+                <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.1" value="1">
+            </div>
+            <div class="menu-item-icon" id="fillToggle">
+                <svg viewBox="0 0 24 24"><path d="M7 3H5c-1.1 0-2 .9-2 2v2h2V5h2V3zm10 0h2c1.1 0 2 .9 2 2v2h-2V5h-2V3zM7 21H5c-1.1 0-2-.9-2-2v-2h2v2h2v2zm10 0h2c1.1 0 2-.9 2-2v-2h-2v2h-2v2zM12 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" fill="currentColor"/></svg>
+            </div>
+            <div class="menu-item-icon" id="speedMenu">
+                <svg viewBox="0 0 24 24"><path d="M20.38 8.57l-1.23 1.85a8 8 0 0 1-.22 7.58H5.07A8 8 0 0 1 15.58 6.85l1.85-1.23A10 10 0 0 0 3.35 19a2 2 0 0 0 1.72 1h13.85a2 2 0 0 0 1.74-1 10 10 0 0 0-.27-10.43zM10.59 15.41a2 2 0 0 0 2.83 0l5.66-8.49-8.49 5.66a2 2 0 0 0 0 2.83z"/></svg>
+                <span class="speed-text" id="speedVal">1x</span>
+            </div>
+            <div class="menu-item-icon" id="pipMenu">
+                <svg viewBox="0 0 24 24"><path d="M19 11h-8v6h8v-6zm4 8V4.98C23 3.88 22.1 3 21 3H3c-1.1 0-2 .88-2 1.98V19c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2zm-2 .02H3V4.97h18v14.05z"/></svg>
+            </div>
+            <div class="menu-item-icon" id="castBtn" style="display:none">
+                <svg viewBox="0 0 24 24"><path d="M21 3H3c-1.1 0-2 .9-2 2v3h2V5h18v14h-7v2h7c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM1 18v3h3c0-1.66-1.34-3-3-3zm0-4v2c2.76 0 5 2.24 5 5h2c0-3.87-3.13-7-7-7zm0-4v2c4.97 0 9 4.03 9 9h2c0-6.08-4.92-11-11-11z" fill="currentColor"/></svg>
+            </div>
+        </div>
+    </div>
+</div>

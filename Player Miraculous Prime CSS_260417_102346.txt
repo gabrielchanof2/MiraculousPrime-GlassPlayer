@@ -1,0 +1,288 @@
+<style>
+:root {
+    --glass: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-blur: blur(12px);
+    --accent: #ffffff;
+    --round-lg: 24px; 
+    --round-md: 16px;
+    --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* --- INTRO OVERLAY --- */
+#introOverlay {
+    position: absolute;
+    inset: 0;
+    background: #000;
+    background-size: cover;
+    background-position: center;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--round-lg);
+    overflow: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s;
+}
+
+#introVideo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--round-lg);
+    display: none; /* Escondido até o play ser clicado */
+}
+
+/* --- BOTÃO INICIAR MELHORADO --- */
+.start-intro-btn {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 100%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 14px 40px;
+    color: white;
+    border-radius: 50px;
+    font-family: var(--font-main);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    z-index: 1001;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: btnEntrance 0.8s ease-out, pulseBtn 3s infinite;
+}
+
+@keyframes btnEntrance {
+    from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+@keyframes pulseBtn {
+    0% { box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 0 0px rgba(255, 255, 255, 0.1); }
+    50% { box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 0 15px rgba(255, 255, 255, 0); }
+    100% { box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 0 0px rgba(255, 255, 255, 0); }
+}
+
+.start-intro-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateX(-50%) translateY(-3px);
+    letter-spacing: 3px;
+}
+
+.start-intro-btn svg {
+    filter: drop-shadow(0 0 5px rgba(255,255,255,0.5));
+}
+
+#introOverlay.fade-out {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* --- LOGOMARCA (MARCA D'ÁGUA) --- */
+.player-logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 100px;
+    height: auto;
+    opacity: 0.4;
+    z-index: 10;
+    pointer-events: none;
+    user-select: none;
+    transition: opacity 0.3s ease;
+}
+
+.player.hide .player-logo {
+    opacity: 0.15;
+}
+
+/* --- EFEITO DE FLASH --- */
+.flash-overlay {
+    position: absolute;
+    inset: 0;
+    background: white;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 99;
+    border-radius: var(--round-lg);
+}
+
+.run-flash {
+    animation: cameraFlash 0.4s ease-out;
+}
+
+@keyframes cameraFlash {
+    0% { opacity: 0; }
+    20% { opacity: 0.8; }
+    100% { opacity: 0; }
+}
+
+.player-wrapper {
+    width: 100%;
+    max-width: 960px;
+    margin: 20px auto;
+    position: relative;
+    aspect-ratio: 16 / 9;
+}
+
+.player {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: #000; 
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: var(--round-lg);
+    font-family: var(--font-main);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    z-index: 1; 
+}
+
+video { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: contain; 
+    border-radius: var(--round-lg);
+    transition: object-fit 0.3s ease;
+}
+
+video.fill-mode {
+    object-fit: cover;
+}
+
+.volume-container { display: flex; align-items: center; gap: 8px; padding: 0 10px; }
+.volume-slider {
+    width: 0; opacity: 0; transition: 0.3s;
+    -webkit-appearance: none; background: rgba(255,255,255,0.2);
+    height: 4px; border-radius: 2px; outline: none; cursor: pointer;
+}
+.volume-container:hover .volume-slider { width: 80px; opacity: 1; }
+.volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 12px; height: 12px;
+    background: white; border-radius: 50%;
+}
+
+.center-play {
+    position: absolute; width: 60px; height: 60px; display: flex; justify-content: center; 
+    align-items: center; z-index: 10; pointer-events: none; transition: 0.4s;
+    background: rgba(255,255,255,0.15); backdrop-filter: var(--glass-blur);
+    border: 1px solid rgba(255,255,255,0.3); border-radius: 50%; color: white;
+}
+.player.playing .center-play { opacity: 0; transform: scale(1.2); }
+
+.top-actions { position: absolute; top: 15px; right: 15px; display: flex; gap: 8px; z-index: 12; transition: 0.3s; }
+
+.bottom-controls { 
+    position: absolute; 
+    bottom: 0; left: 0; right: 0; 
+    padding: 10px 15px 12px 15px; 
+    z-index: 15; 
+    transition: 0.3s; 
+}
+
+.icon-btn { 
+    background: var(--glass); border: 1px solid var(--glass-border); color: white; 
+    cursor: pointer; padding: 8px; display: flex; align-items: center; 
+    border-radius: var(--round-md); backdrop-filter: var(--glass-blur); transition: 0.2s;
+    outline: none;
+}
+.icon-btn svg { width: 20px; height: 20px; fill: currentColor; }
+
+.icon-btn.loading { opacity: 0.5; cursor: wait; animation: pulse 1s infinite; }
+@keyframes pulse { 50% { transform: scale(0.9); } }
+
+.settings-menu {
+    position: absolute; bottom: 75px; right: 15px; padding: 6px; display: none; 
+    align-items: center; gap: 4px; z-index: 20; background: var(--glass); 
+    backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border); border-radius: 50px;
+}
+.settings-menu.active { display: flex; }
+.menu-item-icon { width: 40px; height: 40px; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; }
+
+/* --- MODAIS --- */
+.download-modal, .resume-modal {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+.download-modal.active, .resume-modal.active { display: flex; }
+
+.modal-content {
+    background: var(--glass);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    padding: 24px;
+    border-radius: var(--round-lg);
+    text-align: center;
+    color: white;
+    max-width: 280px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+.modal-content p { margin: 0 0 20px 0; font-weight: 500; font-size: 16px; }
+.modal-btns { display: flex; gap: 10px; justify-content: center; }
+.modal-btn {
+    padding: 10px 20px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 13px;
+    transition: 0.2s;
+}
+.btn-confirm { background: white; color: black; }
+.btn-cancel { background: rgba(255,255,255,0.1); color: white; border: 1px solid var(--glass-border); }
+.modal-btn:active { transform: scale(0.95); }
+
+/* --- PROGRESSO --- */
+.progress-container { width: 100%; height: 20px; display: flex; align-items: center; cursor: pointer; touch-action: none; margin-bottom: 2px; position: relative; }
+.progress-bar { width: 100%; height: 4px; background: rgba(255,255,255,0.2); border-radius: 10px; position: relative; pointer-events: none; }
+.progress-current { position: absolute; height: 100%; background: var(--accent); border-radius: 10px; width: 0%; pointer-events: none; }
+.progress-current::after { content: ''; position: absolute; right: -6px; top: 50%; transform: translateY(-50%); width: 12px; height: 12px; background: white; border-radius: 50%; box-shadow: 0 0 10px rgba(0,0,0,0.5); }
+
+.buttons-row { display: flex; align-items: center; justify-content: space-between; margin-top: 5px; }
+.left-side, .right-side { display: flex; align-items: center; gap: 15px; }
+.time-display { color: white; font-size: 12px; font-weight: 500; }
+.speed-text { font-size: 10px; font-weight: 800; margin-left: 2px; color: white; }
+
+.interaction-layer { position: absolute; inset: 0; z-index: 5; display: flex; }
+.side-zone { width: 30%; height: 100%; position: relative; cursor: pointer; }
+.center-zone { flex: 1; height: 100%; cursor: pointer; }
+.seek-ripple { position: absolute; inset: 0; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); display: flex; justify-content: center; align-items: center; color: white; opacity: 0; pointer-events: none; }
+.side-zone.active .seek-ripple { animation: rippleEffect 0.6s ease-out; }
+@keyframes rippleEffect { 0% { opacity: 0; } 50% { opacity: 1; } 100% { opacity: 0; } }
+.controls-bg { position: absolute; inset: 0; background: linear-gradient(transparent, rgba(0,0,0,0.7)); pointer-events: none; z-index: 8; transition: 0.3s; }
+.player.hide .bottom-controls, .player.hide .controls-bg, .player.hide .top-actions { opacity: 0; pointer-events: none; }
+
+.thumbnail-preview { 
+    position: absolute; bottom: 85px; left: 0; width: 160px; aspect-ratio: 16/9; background: #000; 
+    border: 1px solid var(--glass-border); border-radius: var(--round-md); overflow: hidden; 
+    display: none; pointer-events: none; z-index: 30; transform: translateX(-50%);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+}
+.thumbnail-preview video { width: 100%; height: 100%; object-fit: cover; }
+.thumbnail-time { position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.8); color: white; padding: 2px 6px; border-radius: 4px; font-size: 11px; font-weight: bold; }
+
+@media (max-width: 600px) {
+    .player { border-radius: 12px; }
+    video { border-radius: 12px; }
+    .thumbnail-preview { width: 120px; bottom: 75px; }
+    .player-logo { width: 70px; top: 15px; left: 15px; }
+    #introOverlay, #introVideo { border-radius: 12px; }
+    .start-intro-btn { bottom: 25px; padding: 12px 30px; font-size: 12px; }
+}
+</style>
